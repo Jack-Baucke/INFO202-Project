@@ -19,6 +19,15 @@ public class Product {
     private BigDecimal listPrice;
     private Integer quantity;
 
+    public Product(int productID, String name, String description, String category, BigDecimal listPrice, Integer quantity) {
+        this.productID = productID;
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.listPrice = listPrice;
+        this.quantity = quantity;
+    }
+
     public int getProductID() {
         return productID;
     }
@@ -69,7 +78,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "productID=" + productID + ", name=" + name + '}';
+        return "Product{" + "productID=" + productID + ", name=" + name + ", description=" + description + ", category=" + category + ", listPrice=" + listPrice + ", quantity=" + quantity + '}';
     }
+
+    
     
 }
