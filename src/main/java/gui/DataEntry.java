@@ -5,6 +5,7 @@
  */
 package gui;
 
+import dao.DAO;
 import domain.Product;
 import java.math.BigDecimal;
 
@@ -14,6 +15,8 @@ import java.math.BigDecimal;
  * @author bauja773
  */
 public class DataEntry extends javax.swing.JDialog {
+    
+    private DAO dataAccess = new DAO();
 
     /**
      * Creates new form DataEntry
@@ -200,6 +203,7 @@ public class DataEntry extends javax.swing.JDialog {
         int quant = Integer.parseInt(quantity);        
         Product product = new Product(idInt, name, description, catString, price, quant);
         System.out.println(product.toString());
+        dataAccess.saveProduct(product);
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     /**
