@@ -5,11 +5,17 @@
  */
 package gui;
 
+import dao.DAO;
+import gui.helpers.SimpleListModel;
+
 /**
  *
  * @author bauja773
  */
 public class ProductReport extends javax.swing.JDialog {
+    
+    private DAO dataAccess = new DAO();
+    private SimpleListModel myModel = new SimpleListModel();
 
     /**
      * Creates new form ProductReport
@@ -17,6 +23,8 @@ public class ProductReport extends javax.swing.JDialog {
     public ProductReport(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        myModel.updateItems(dataAccess.getProducts());
+        listProduct.setModel(myModel);
     }
 
     /**
@@ -29,18 +37,18 @@ public class ProductReport extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listProduct = new javax.swing.JList<>();
         buttonCancel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listProduct.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listProduct);
 
         buttonCancel.setText("Cancel");
         buttonCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +135,7 @@ public class ProductReport extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> listProduct;
     // End of variables declaration//GEN-END:variables
 }

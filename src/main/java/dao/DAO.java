@@ -21,10 +21,8 @@ public class DAO {
         productList.add(product);
     }
     
-    public void getProducts() {
-        for (Product product : productList) {
-            product.toString();
-        }
+    public ArrayList<Product> getProducts() {
+        return productList;
     }
     
 }
