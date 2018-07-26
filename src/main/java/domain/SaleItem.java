@@ -1,4 +1,6 @@
+package domain;
 
+import domain.Product;
 import java.math.BigDecimal;
 /**
  *
@@ -7,7 +9,25 @@ import java.math.BigDecimal;
 public class SaleItem {
 	
 	private int quantityPurchased;
-	private BigDecimal salePrice;
+	private BigDecimal salePrice;        
+        private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public Sale getSale() {
+        return sale;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setSale(Sale sale) {
+        this.sale = sale;
+    }
+        private Sale sale;
 
 	public SaleItem(int quantityPurchased, BigDecimal salePrice) {
 		this.quantityPurchased = quantityPurchased;
@@ -29,6 +49,10 @@ public class SaleItem {
 	public void setSalePrice(BigDecimal salePrice) {
 		this.salePrice = salePrice;
 	}
+        
+        public BigDecimal getItemTotal() {
+            return salePrice.multiply(new BigDecimal(quantityPurchased));
+        }
 	
 	
 }

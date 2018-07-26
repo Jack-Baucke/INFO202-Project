@@ -1,3 +1,6 @@
+import domain.SaleItem;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -9,6 +12,9 @@ public class Sale {
 	private int saleID;
 	private Date date;
 	private String status;
+        
+        private Customer customer;
+        private static ArrayList<SaleItem> saleItemList = new ArrayList<>();
 
 	public Sale(int saleID, Date date, String status) {
 		this.saleID = saleID;
@@ -43,6 +49,25 @@ public class Sale {
 	@Override
 	public String toString() {
 		return "Sale{" + "saleID=" + saleID + ", date=" + date + ", status=" + status + '}';
-	}	
+	}
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+        
+        public void addItem(SaleItem saleItem) {
+            saleItemList.add(saleItem);
+        }
+        
+        public BigDecimal getTotal() {
+            BigDecimal total = new BigDecimal(0);
+            for (SaleItem item : saleItemList) {
+                total.add(item.getSalePrice());            
+            }
+            return total;        }
 	
 }
