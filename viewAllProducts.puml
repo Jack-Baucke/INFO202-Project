@@ -1,0 +1,22 @@
+@startuml
+actor "User" as user
+participant "MainMenu" as mainMenu <<frame>>
+
+user -> mainMenu++: Click View Product
+
+create "ProductReport" as productReport <<dialog>>
+
+mainMenu -> productReport++: Create new instance of productReport
+mainMenu--
+
+participant "DAO" as dao
+
+productReport -> dao++: getProducts()
+return productList
+dao--
+
+user -> productReport: Clicks cancel
+productReport -> productReport: dispose()
+productReport--
+
+@enduml

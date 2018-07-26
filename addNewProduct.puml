@@ -1,0 +1,23 @@
+@startuml
+skinparam style strictuml
+
+actor "User" as user
+participant "MainMenu" as mainMenu <<frame>>
+
+user -> mainMenu++ : Clicks add product
+
+create "DataEntry" as dataEntry <<dialog>>
+
+mainMenu -> dataEntry++: Create instance of DataEntry
+mainMenu--
+
+user -> dataEntry: Enter product details
+user -> dataEntry: Click save
+dataEntry -> dataEntry: construct(product)
+
+participant "DAO" as dao
+
+dataEntry -> dao++ : saveProduct(product)
+dao--
+
+@enduml
