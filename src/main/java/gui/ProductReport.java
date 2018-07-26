@@ -91,7 +91,7 @@ public class ProductReport extends javax.swing.JDialog {
 
       jLabel3.setText("Category Filter");
 
-      jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Books", "Clothes", "Electronics", "Bedding" }));
+      jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Books", "Clothes", "Electronics", "Bedding" }));
       jComboBox1.addActionListener(new java.awt.event.ActionListener() {
          public void actionPerformed(java.awt.event.ActionEvent evt) {
             jComboBox1ActionPerformed(evt);
