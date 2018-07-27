@@ -17,7 +17,9 @@ dataEntry -> dataEntry: construct(product)
 
 participant "DAO" as dao
 
-dataEntry -> dao++ : saveProduct(product)
+dataEntry -> dao++: saveProduct(product)
+dataEntry -> dao: saveCategory(category);
+
 dao--
 
 @enduml
