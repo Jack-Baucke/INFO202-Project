@@ -164,17 +164,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbCategory">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
-            <StringItem index="0" value="All"/>
-            <StringItem index="1" value="Books"/>
-            <StringItem index="2" value="Clothes"/>
-            <StringItem index="3" value="Electronics"/>
-            <StringItem index="4" value="Bedding"/>
-          </StringArray>
-        </Property>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbCategoryActionPerformed"/>
       </Events>

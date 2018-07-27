@@ -204,6 +204,7 @@ public class DataEntry extends javax.swing.JDialog {
         Product product = new Product(idInt, name, description, catString, price, quant);
         System.out.println(product.toString());
         dataAccess.saveProduct(product);
+        dataAccess.saveCategory(catString);
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     /**

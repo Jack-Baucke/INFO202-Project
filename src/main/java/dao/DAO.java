@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class DAO {
     
     private static ArrayList<Product> productList = new ArrayList<>();
+    private static ArrayList<String> categoryList = new ArrayList<>();
     
     
     public void saveProduct(Product product) {
@@ -23,6 +24,14 @@ public class DAO {
     
     public ArrayList<Product> getProducts() {
         return productList;
+    }
+    
+    public void saveCategory(String category) {
+        categoryList.add(category);
+    }
+    
+    public ArrayList<String> getCategories() {
+        return categoryList;
     }
     
 }

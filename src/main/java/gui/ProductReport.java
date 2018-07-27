@@ -15,7 +15,8 @@ import gui.helpers.SimpleListModel;
 public class ProductReport extends javax.swing.JDialog {
     
     private DAO dataAccess = new DAO();
-    private SimpleListModel myModel = new SimpleListModel();
+    private SimpleListModel myModel1 = new SimpleListModel();
+    private SimpleListModel myModel2 = new SimpleListModel();
 
     /**
      * Creates new form ProductReport
@@ -23,8 +24,10 @@ public class ProductReport extends javax.swing.JDialog {
     public ProductReport(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        myModel.updateItems(dataAccess.getProducts());
-        listProduct.setModel(myModel);
+        myModel1.updateItems(dataAccess.getProducts());
+        listProduct.setModel(myModel1);
+        myModel2.updateItems(dataAccess.getCategories());
+        cmbCategory.setModel(myModel2);
     }
 
     /**
@@ -91,7 +94,6 @@ public class ProductReport extends javax.swing.JDialog {
 
         jLabel3.setText("Category Filter");
 
-        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Books", "Clothes", "Electronics", "Bedding" }));
         cmbCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbCategoryActionPerformed(evt);
