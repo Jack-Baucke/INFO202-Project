@@ -7,6 +7,7 @@ package gui;
 
 import dao.DAO;
 import gui.helpers.SimpleListModel;
+import domain.Product;
 
 /**
  *
@@ -53,11 +54,6 @@ public class ProductReport extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        listProduct.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(listProduct);
 
         buttonCancel.setText("Cancel");
@@ -170,7 +166,8 @@ public class ProductReport extends javax.swing.JDialog {
    }//GEN-LAST:event_buttonEditActionPerformed
 
    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
-
+      dataAccess.deleteProduct(listProduct.getSelectedValue());
+      myModel1.updateItems(dataAccess.getProducts());
    }//GEN-LAST:event_buttonDeleteActionPerformed
 
    private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
@@ -234,7 +231,7 @@ public class ProductReport extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listProduct;
+    private javax.swing.JList<Product> listProduct;
     private javax.swing.JTextField txtID;
     // End of variables declaration//GEN-END:variables
 }
