@@ -17,13 +17,29 @@ import java.math.BigDecimal;
 public class DataEntry extends javax.swing.JDialog {
     
     private DAO dataAccess = new DAO();
+    private Product product = new Product();
 
     /**
      * Creates new form DataEntry
      */
-    public DataEntry(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DataEntry(java.awt.Window parent, boolean modal) {
+        super(parent);
+        super.setModal(modal);
         initComponents();
+    }
+    
+    public DataEntry(java.awt.Window parent, boolean modal, Product product) {        
+        // call other constructor
+        this(parent, modal);        
+        // assign the product that we are editing to the product field
+        this.product = product;
+        txtID.setText(product.getProductID());
+        txtID.setEditable(false);
+        txtName.setText(product.getName());
+        txtPrice.setText(product.getListPrice().toString());
+        txtQuantity.setText(Integer.toString(product.getQuantity()));
+        textAreaDescription.setText(product.getDescription());
+        comboBoxCategory.setSelectedItem(product.getCategory());
     }
 
     /**
@@ -193,17 +209,24 @@ public class DataEntry extends javax.swing.JDialog {
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         // TODO add your handling code here:
         String id = txtID.getText();
-        int idInt = Integer.parseInt(id);
         String name = txtName.getText();
         String description = textAreaDescription.getText();
         Object category = comboBoxCategory.getSelectedItem();
         String catString = category.toString();
         BigDecimal price = new BigDecimal(txtPrice.getText());
         String quantity = txtQuantity.getText();
-        int quant = Integer.parseInt(quantity);        
-        Product product = new Product(idInt, name, description, catString, price, quant);
-        System.out.println(product.toString());
-        dataAccess.saveProduct(product);
+        int quant = Integer.parseInt(quantity); 
+        
+        
+        product.setProductID(id);
+        product.setName(name);
+        product.setCategory(catString);
+        product.setDescription(description);
+        product.setListPrice(price);
+        product.setQuantity(quant);
+        
+        //System.out.println(this.product.toString());
+        dataAccess.saveProduct(this.product);
         dataAccess.saveCategory(catString);
     }//GEN-LAST:event_buttonSaveActionPerformed
 

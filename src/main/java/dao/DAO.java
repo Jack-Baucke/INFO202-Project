@@ -19,7 +19,7 @@ public class DAO {
     private static Collection<Product> productList = new HashSet<>();
     private static Collection<String> categoryList = new HashSet<>();
     
-    
+    //have saveProduct and saveCategory in the same method!!
     public void saveProduct(Product product) {
         productList.add(product);
     }

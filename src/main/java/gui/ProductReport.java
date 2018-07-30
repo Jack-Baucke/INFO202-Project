@@ -8,13 +8,14 @@ package gui;
 import dao.DAO;
 import gui.helpers.SimpleListModel;
 import domain.Product;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author bauja773
  */
 public class ProductReport extends javax.swing.JDialog {
-    
+
     private DAO dataAccess = new DAO();
     private SimpleListModel myModel1 = new SimpleListModel();
     private SimpleListModel myModel2 = new SimpleListModel();
@@ -162,21 +163,34 @@ public class ProductReport extends javax.swing.JDialog {
     }//GEN-LAST:event_buttonCancelActionPerformed
 
    private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
-
+       //add condition for if selection is empty
+       Product product = listProduct.getSelectedValue();
+       DataEntry editForm = new DataEntry(this, true, product);
+       editForm.setLocationRelativeTo(this);
+       editForm.setVisible(true);
+       myModel1.updateItems(dataAccess.getProducts());
+       listProduct.setModel(myModel1);
    }//GEN-LAST:event_buttonEditActionPerformed
 
    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
-      dataAccess.deleteProduct(listProduct.getSelectedValue());
-      myModel1.updateItems(dataAccess.getProducts());
+       if (listProduct.isSelectionEmpty() == false) {
+           int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete?");
+           if (result == JOptionPane.YES_OPTION) {
+               dataAccess.deleteProduct(listProduct.getSelectedValue());
+               myModel1.updateItems(dataAccess.getProducts());
+               listProduct.setModel(myModel1);
+           }
+       }
+       
    }//GEN-LAST:event_buttonDeleteActionPerformed
 
    private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
 
-      
+
    }//GEN-LAST:event_buttonSearchActionPerformed
 
    private void cmbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoryActionPerformed
-      // TODO add your handling code here:
+       // TODO add your handling code here:
    }//GEN-LAST:event_cmbCategoryActionPerformed
 
     /**
