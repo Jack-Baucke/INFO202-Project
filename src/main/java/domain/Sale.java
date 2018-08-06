@@ -16,7 +16,7 @@ public class Sale {
     private String status;
 
     private Customer customer;
-    private static ArrayList<SaleItem> saleItemList = new ArrayList<>();
+    private  ArrayList<SaleItem> saleItemList = new ArrayList<>();
 
     public Sale(int saleID, Date date, String status) {
         this.saleID = saleID;

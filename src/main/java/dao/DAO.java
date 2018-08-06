@@ -23,27 +23,33 @@ public class DAO implements DAOInterface {
     private static Map<String, Product> productIDMap = new HashMap<>();
     
     //have saveProduct and saveCategory in the same method!!
+    @Override
     public void saveProduct(Product product) {
         productList.add(product);
         productIDMap.put(product.getProductID(), product);
     }
     
+    @Override
     public Collection<Product> getProducts() {
         return productList;
     }
     
+    @Override
     public void saveCategory(String category) {
         categoryList.add(category);
     }
     
+    @Override
     public Collection<String> getCategories() {
         return categoryList;
     }
     
+    @Override
     public void deleteProduct(Product product) {
         productList.remove(product);
     }
     
+    @Override
     public Product search(String id){        
         if (productIDMap.containsKey(id)) {
             return productIDMap.get(id);
