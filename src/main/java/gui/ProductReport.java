@@ -185,8 +185,8 @@ public class ProductReport extends javax.swing.JDialog {
    }//GEN-LAST:event_buttonDeleteActionPerformed
 
    private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
-
-
+       myModel1.updateItems(dataAccess.search(txtID.getText()));
+       listProduct.setModel(myModel1);
    }//GEN-LAST:event_buttonSearchActionPerformed
 
    private void cmbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoryActionPerformed

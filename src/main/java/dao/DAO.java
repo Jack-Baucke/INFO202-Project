@@ -8,20 +8,24 @@ package dao;
 import domain.Product;
 //import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  *
  * @author bauja773
  */
-public class DAO {
+public class DAO implements DAOInterface {
     
     private static Collection<Product> productList = new HashSet<>();
     private static Collection<String> categoryList = new HashSet<>();
+    private static Map<String, Product> productIDMap = new HashMap<>();
     
     //have saveProduct and saveCategory in the same method!!
     public void saveProduct(Product product) {
         productList.add(product);
+        productIDMap.put(product.getProductID(), product);
     }
     
     public Collection<Product> getProducts() {
@@ -40,4 +44,11 @@ public class DAO {
         productList.remove(product);
     }
     
+    public Product search(String id){        
+        if (productIDMap.containsKey(id)) {
+            return productIDMap.get(id);
+        } else {
+            return null;
+        }              
+    }    
 }
