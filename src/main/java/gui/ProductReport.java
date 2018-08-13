@@ -6,6 +6,7 @@
 package gui;
 
 import dao.DAO;
+import dao.DatabaseManager;
 import gui.helpers.SimpleListModel;
 import domain.Product;
 import javax.swing.JOptionPane;
@@ -16,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class ProductReport extends javax.swing.JDialog {
 
-    private DAO dataAccess = new DAO();
+    private DatabaseManager dataAccess = new DatabaseManager();
     private SimpleListModel myModel1 = new SimpleListModel();
     private SimpleListModel myModel2 = new SimpleListModel();
 
@@ -190,7 +191,8 @@ public class ProductReport extends javax.swing.JDialog {
    }//GEN-LAST:event_buttonSearchActionPerformed
 
    private void cmbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoryActionPerformed
-       // TODO add your handling code here:
+       myModel1.updateItems(dataAccess.filterByCategory(cmbCategory.getSelectedItem().toString()));
+       listProduct.setModel(myModel1);
    }//GEN-LAST:event_cmbCategoryActionPerformed
 
     /**

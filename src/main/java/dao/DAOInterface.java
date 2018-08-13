@@ -20,11 +20,11 @@ public interface DAOInterface {
 
     Collection<Product> getProducts();
 
-    void saveCategory(String category);
-
     //have saveProduct and saveCategory in the same method!!
     void saveProduct(Product product);
 
     Product search(String id);
+    
+    Collection<Product> filterByCategory(String category);
     
 }

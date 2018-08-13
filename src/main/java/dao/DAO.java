@@ -5,6 +5,8 @@
  */
 package dao;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import domain.Product;
 //import java.util.ArrayList;
 import java.util.Collection;
@@ -17,44 +19,50 @@ import java.util.Map;
  * @author bauja773
  */
 public class DAO implements DAOInterface {
-    
-    private static Collection<Product> productList = new HashSet<>();
-    private static Collection<String> categoryList = new HashSet<>();
+
+//    private static Collection<Product> productList = new HashSet<>();
+//    private static Collection<String> categoryList = new HashSet<>();
     private static Map<String, Product> productIDMap = new HashMap<>();
-    
+    private static Multimap<String, Product> categoryMap = HashMultimap.create();
+
     //have saveProduct and saveCategory in the same method!!
     @Override
     public void saveProduct(Product product) {
-        productList.add(product);
+//        productList.add(product);
+//        categoryList.add(product.getCategory());
         productIDMap.put(product.getProductID(), product);
+        categoryMap.put(product.getCategory(), product);
     }
-    
+
     @Override
     public Collection<Product> getProducts() {
-        return productList;
+        return productIDMap.values();
     }
-    
-    @Override
-    public void saveCategory(String category) {
-        categoryList.add(category);
-    }
-    
+
     @Override
     public Collection<String> getCategories() {
-        return categoryList;
+        return categoryMap.keySet();
     }
-    
+
     @Override
     public void deleteProduct(Product product) {
-        productList.remove(product);
+//        productList.remove(product);
+        productIDMap.remove(product.getProductID());
+        categoryMap.remove(product.getCategory(), product);
     }
-    
+
     @Override
-    public Product search(String id){        
+    public Product search(String id) {
         if (productIDMap.containsKey(id)) {
             return productIDMap.get(id);
         } else {
             return null;
-        }              
-    }    
+        }
+    }
+
+    @Override
+    public Collection<Product> filterByCategory(String category) {
+        Collection<Product> productList = categoryMap.get(category);
+        return productList;
+    }
 }

@@ -6,6 +6,7 @@
 package gui;
 
 import dao.DAO;
+import dao.DatabaseManager;
 import domain.Product;
 import java.math.BigDecimal;
 
@@ -16,7 +17,7 @@ import java.math.BigDecimal;
  */
 public class DataEntry extends javax.swing.JDialog {
     
-    private DAO dataAccess = new DAO();
+    private DatabaseManager dataAccess = new DatabaseManager();
     private Product product = new Product();
 
     /**
@@ -104,7 +105,6 @@ public class DataEntry extends javax.swing.JDialog {
         labelCategory.setText("Category:");
 
         comboBoxCategory.setEditable(true);
-        comboBoxCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Clothes", "Books", "Electronics", "Bedding", " " }));
 
         labelPrice.setText("Price");
 
@@ -242,7 +242,7 @@ public class DataEntry extends javax.swing.JDialog {
         
         //System.out.println(this.product.toString());
         dataAccess.saveProduct(this.product);
-        dataAccess.saveCategory(catString);
+        //dataAccess.saveCategory(catString);
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     /**
