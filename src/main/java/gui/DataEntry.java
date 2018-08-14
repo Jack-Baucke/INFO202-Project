@@ -10,6 +10,7 @@ import dao.DAO;
 import dao.DAOException;
 import dao.DatabaseManager;
 import domain.Product;
+import gui.helpers.SimpleListModel;
 import gui.helpers.ValidationHelper;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
@@ -23,6 +24,7 @@ public class DataEntry extends javax.swing.JDialog {
     private DatabaseManager dataAccess = new DatabaseManager();
     private Product product = new Product();
     private ValidationHelper helper = new ValidationHelper();
+    private SimpleListModel myModel = new SimpleListModel();
 
     /**
      * Creates new form DataEntry
@@ -33,6 +35,8 @@ public class DataEntry extends javax.swing.JDialog {
         initComponents();
         helper.addTypeFormatter(txtPrice, "#0.00", BigDecimal.class);
         helper.addTypeFormatter(txtQuantity, "#", Integer.class);
+        myModel.updateItems(dataAccess.getCategories());
+        comboBoxCategory.setModel(myModel);
     }
 
     public DataEntry(java.awt.Window parent, boolean modal, Product product) {
