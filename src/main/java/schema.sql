@@ -10,10 +10,10 @@
 
 create table Product (
 Product_ID varchar(50),
-Product_Name varchar(50),
+Product_Name varchar(50) not null,
 Product_Description varchar(200),
-Product_Category varchar(30),
-Product_Price decimal(10, 2),
-Product_Quantity int,
+Product_Category varchar(30) not null,
+Product_Price decimal(10, 2) not null,
+Product_Quantity int not null,
 constraint Product_PK primary key (Product_ID)
 );

@@ -5,20 +5,24 @@
  */
 package gui;
 
+import com.sun.jndi.toolkit.corba.CorbaUtils;
 import dao.DAO;
+import dao.DAOException;
 import dao.DatabaseManager;
 import domain.Product;
+import gui.helpers.ValidationHelper;
 import java.math.BigDecimal;
-
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author bauja773
  */
 public class DataEntry extends javax.swing.JDialog {
-    
+
     private DatabaseManager dataAccess = new DatabaseManager();
     private Product product = new Product();
+    private ValidationHelper helper = new ValidationHelper();
 
     /**
      * Creates new form DataEntry
@@ -27,18 +31,20 @@ public class DataEntry extends javax.swing.JDialog {
         super(parent);
         super.setModal(modal);
         initComponents();
+        helper.addTypeFormatter(txtPrice, "#0.00", BigDecimal.class);
+        helper.addTypeFormatter(txtQuantity, "#", Integer.class);
     }
-    
-    public DataEntry(java.awt.Window parent, boolean modal, Product product) {        
+
+    public DataEntry(java.awt.Window parent, boolean modal, Product product) {
         // call other constructor
-        this(parent, modal);        
+        this(parent, modal);
         // assign the product that we are editing to the product field
         this.product = product;
         txtID.setText(product.getProductID());
         txtID.setEditable(false);
         txtName.setText(product.getName());
-        txtPrice.setText(product.getListPrice().toString());
-        txtQuantity.setText(Integer.toString(product.getQuantity()));
+        txtPrice.setValue(product.getListPrice());
+        txtQuantity.setValue(product.getQuantity());
         textAreaDescription.setText(product.getDescription());
         comboBoxCategory.setSelectedItem(product.getCategory());
     }
@@ -65,11 +71,11 @@ public class DataEntry extends javax.swing.JDialog {
         comboBoxCategory = new javax.swing.JComboBox<>();
         labelPrice = new javax.swing.JLabel();
         labelQuantity = new javax.swing.JLabel();
-        txtPrice = new javax.swing.JTextField();
-        txtQuantity = new javax.swing.JTextField();
         buttonSave = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
         labelTitle = new javax.swing.JLabel();
+        txtPrice = new javax.swing.JFormattedTextField();
+        txtQuantity = new javax.swing.JFormattedTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -110,12 +116,6 @@ public class DataEntry extends javax.swing.JDialog {
 
         labelQuantity.setText("Quantity in Stock:");
 
-        txtPrice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPriceActionPerformed(evt);
-            }
-        });
-
         buttonSave.setText("Save");
         buttonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,16 +148,16 @@ public class DataEntry extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtID)
-                            .addComponent(txtName)
-                            .addComponent(comboBoxCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtQuantity)
-                            .addComponent(txtPrice))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
-                        .addGap(15, 15, 15))))
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtQuantity, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPrice, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtID, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboBoxCategory, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(labelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -185,15 +185,15 @@ public class DataEntry extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelDescription)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelCategory)
                     .addComponent(comboBoxCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelPrice)
-                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelQuantity)
@@ -212,44 +212,46 @@ public class DataEntry extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNameActionPerformed
 
-    private void txtPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPriceActionPerformed
-
     private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        // TODO add your handling code here:
-        String id = txtID.getText();
-        String name = txtName.getText();
-        String description = textAreaDescription.getText();
-        Object category = comboBoxCategory.getSelectedItem();
-        String catString = category.toString();
-        BigDecimal price = new BigDecimal(txtPrice.getText());
-        String quantity = txtQuantity.getText();
-        int quant = Integer.parseInt(quantity); 
-        
-        
-        product.setProductID(id);
-        product.setName(name);
-        product.setCategory(catString);
-        product.setDescription(description);
-        product.setListPrice(price);
-        product.setQuantity(quant);
-        
-        //System.out.println(this.product.toString());
-        dataAccess.saveProduct(this.product);
-        //dataAccess.saveCategory(catString);
+        try {
+            if (dataAccess.search(txtID.getText()) != null) {
+                JOptionPane.showMessageDialog(this, "Can't have two products with the same ID", "Warning", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            String id = txtID.getText();
+            String name = txtName.getText();
+            String description = textAreaDescription.getText();
+            Object category = comboBoxCategory.getSelectedItem();
+            String catString = (String) category;
+            BigDecimal price = (BigDecimal) txtPrice.getValue();
+            Integer quant = (Integer) txtQuantity.getValue();
+
+            product.setProductID(id);
+            product.setName(name);
+            product.setCategory(catString);
+            product.setDescription(description);
+            product.setListPrice(price);
+            product.setQuantity(quant);
+
+            if (helper.isObjectValid(product)) {
+                dataAccess.saveProduct(this.product);
+                dispose();
+            }
+        } catch (DAOException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Warning", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -305,7 +307,7 @@ public class DataEntry extends javax.swing.JDialog {
     private javax.swing.JTextArea textAreaDescription;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPrice;
-    private javax.swing.JTextField txtQuantity;
+    private javax.swing.JFormattedTextField txtPrice;
+    private javax.swing.JFormattedTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 }
