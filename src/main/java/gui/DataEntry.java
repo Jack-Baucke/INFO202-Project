@@ -223,7 +223,7 @@ public class DataEntry extends javax.swing.JDialog {
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         try {
-            if (dataAccess.search(txtID.getText()) != null) {
+            if (dataAccess.search(txtID.getText()) != null && txtID.isEditable()) {
                 JOptionPane.showMessageDialog(this, "Can't have two products with the same ID", "Warning", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
