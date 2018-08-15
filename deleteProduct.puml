@@ -22,7 +22,7 @@ skinparam {
  
 }
  
-title View Products (using DB dao)
+title Delete Product (using DB dao)
  
 actor User as user
 participant "Administration" as main << main >>
@@ -61,5 +61,29 @@ model--
 dialog -> dialog : lstProducts.setModel(model)
  
 note left : products now\nvisible to user
+
+user -> dialog : click product
+user -> dialog : click "Delete"
+dialog -> user : showConfirmDialog(this, "Are you sure you want to delete?")
+user -> dialog : click "Yes"
+
+dialog -> dao++ : deleteProduct(product)
+dao -> db++ : delete from product where product_id = product.getProductID()
+dao--
+db--
+
+
+dialog -> model-- : updateItems(products)
+dialog -> dialog : lstProducts.setProducts(model)
+
+note left: deleted product\nno longer visible\n to user
+
+
+
+
+
+
+
  
 @enduml
+

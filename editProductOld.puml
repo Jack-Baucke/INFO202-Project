@@ -22,7 +22,7 @@ skinparam {
  
 }
  
-title View Products (using DB dao)
+title Edit Product (using DB dao)
  
 actor User as user
 participant "Administration" as main << main >>
@@ -30,6 +30,7 @@ participant "MainMenu" as menu << frame >>
 participant "ProductReportDialog" as dialog << dialog >>
 participant "ProductDatabaseDAO" as dao << ProductDAO >>
 participant "SimpleListModel\n:model" as model
+participant "ProductEditor" as edit << dialog >>
 database "Database" as db
  
 main++
@@ -61,5 +62,16 @@ model--
 dialog -> dialog : lstProducts.setModel(model)
  
 note left : products now\nvisible to user
+
+user -> dialog : click product
+user -> dialog : click "Edit"
+
+create edit
+
+dialog -> edit++ : « construct »
+
+user -> edit : update product details
+user -> edit : click "Save"
+
  
 @enduml
