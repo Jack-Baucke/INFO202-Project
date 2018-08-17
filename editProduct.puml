@@ -31,6 +31,9 @@ participant "ProductReportDialog" as report << dialog >>
 participant "ProductDAO" as dao << DAO >>
 participant "ProductDialog" as editor << dialog >>
 participant "ValidationHelper" as validator
+participant "SimpleListModel\n:model" as model
+
+database "Database" as db
  
 create menu
 main -> menu : « create »
@@ -61,6 +64,22 @@ report -> report : jList.getSelectedValue() : product
  
 create editor
 report -> editor++ : « create(product) »
+
+editor -> dao++ : getCategories()
+
+dao -> db++ : select distinct product_category from product
+return categories
+
+dao--
+
+create model
+editor -> model : « create »
+
+editor -> model++ : updateItems(categories) : model
+
+model--
+
+editor -> editor : cmbCategory.setModel(model)
  
 create validator
 editor -> validator : « create »
@@ -69,9 +88,11 @@ editor -> validator : « create »
  
  
 ' your code goes here
-note over editor #FF6666 : what happens here?
- 
- 
+'note over editor #FF6666 : what happens here?
+
+editor -> validator++ : addTypeFormatter() for txtPrice and txtQuantity
+
+validator--
  
  
  

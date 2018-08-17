@@ -22,7 +22,7 @@ skinparam {
  
 }
  
-title View Products (using DB dao)
+title Filter Products by Category (using DB dao)
  
 actor User as user
 participant "Administration" as main << main >>
@@ -61,5 +61,20 @@ model--
 dialog -> dialog : lstProducts.setModel(model)
  
 note left : products now\nvisible to user
+
+user -> dialog : select category from combo box
+dialog -> dialog : cmbCategory.getSelectedItem() : category
+
+dialog -> dao++ : filterByCategory(category)
+
+dao -> db++ : select from product where product_category = category
+return ResultSet
+
+dialog -> dao : updateItems(ResultSet)
+dao--
+dialog -> dialog : lstProducts.setModel(model)
+
+note left : only products of specific\ncategory visible to user
+
  
 @enduml

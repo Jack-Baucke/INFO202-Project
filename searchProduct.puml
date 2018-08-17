@@ -22,7 +22,7 @@ skinparam {
  
 }
  
-title View Products (using DB dao)
+title Search for Products by ID (using DB dao)
  
 actor User as user
 participant "Administration" as main << main >>
@@ -61,5 +61,20 @@ model--
 dialog -> dialog : lstProducts.setModel(model)
  
 note left : products now\nvisible to user
+
+user -> dialog : enters product id into search bar
+dialog -> dialog : txtId.getText : id
+user -> dialog : clicks "Search"
+
+dialog -> dao : search(id)
+
+dao -> db++ : select * from product where product_id = id
+return product
+
+dialog -> model++ : updateItems(product)
+dialog -> dialog : lstProducts.getModel(model)
+model--
+
+note left : only searched product\nnow visible to user
  
 @enduml
