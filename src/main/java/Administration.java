@@ -1,4 +1,5 @@
 
+import dao.DatabaseManager;
 import gui.MainMenu;
 
 /*
@@ -12,8 +13,14 @@ import gui.MainMenu;
  * @author bauja773
  */
 public class Administration {
+    
+    
+    
     public static void main(String[] args) {
-        MainMenu menu = new MainMenu();
+        
+        DatabaseManager db = new DatabaseManager();
+        
+        MainMenu menu = new MainMenu(db);
         menu.setLocationRelativeTo(null);
         menu.setVisible(true);
     }

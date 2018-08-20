@@ -8,6 +8,7 @@ package gui;
 import com.sun.jndi.toolkit.corba.CorbaUtils;
 import dao.DAO;
 import dao.DAOException;
+import dao.DAOInterface;
 import dao.DatabaseManager;
 import domain.Product;
 import gui.helpers.SimpleListModel;
@@ -21,7 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class DataEntry extends javax.swing.JDialog {
 
-    private DatabaseManager dataAccess = new DatabaseManager();
+    private final DAOInterface dataAccess/* = new DatabaseManager()*/;
     private Product product = new Product();
     private ValidationHelper helper = new ValidationHelper();
     private SimpleListModel myModel = new SimpleListModel();
@@ -29,19 +30,22 @@ public class DataEntry extends javax.swing.JDialog {
     /**
      * Creates new form DataEntry
      */
-    public DataEntry(java.awt.Window parent, boolean modal) {
+    public DataEntry(java.awt.Window parent, boolean modal, DAOInterface daoInt) {
+
         super(parent);
         super.setModal(modal);
+        this.dataAccess = daoInt;
         initComponents();
         helper.addTypeFormatter(txtPrice, "#0.00", BigDecimal.class);
         helper.addTypeFormatter(txtQuantity, "#", Integer.class);
         myModel.updateItems(dataAccess.getCategories());
         comboBoxCategory.setModel(myModel);
+        
     }
 
-    public DataEntry(java.awt.Window parent, boolean modal, Product product) {
+    public DataEntry(java.awt.Window parent, boolean modal, Product product, DAOInterface daoInt) {
         // call other constructor
-        this(parent, modal);
+        this(parent, modal, daoInt);
         // assign the product that we are editing to the product field
         this.product = product;
         txtID.setText(product.getProductID());
@@ -246,48 +250,7 @@ public class DataEntry extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DataEntry.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DataEntry.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DataEntry.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DataEntry.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                DataEntry dialog = new DataEntry(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
