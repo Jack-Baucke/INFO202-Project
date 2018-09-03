@@ -8,6 +8,7 @@ package dao;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import domain.Product;
+import java.math.BigDecimal;
 //import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

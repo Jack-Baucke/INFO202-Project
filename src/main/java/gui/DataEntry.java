@@ -41,6 +41,15 @@ public class DataEntry extends javax.swing.JDialog {
         myModel.updateItems(dataAccess.getCategories());
         comboBoxCategory.setModel(myModel);
         
+        txtID.setName("txtID");
+        txtName.setName("txtName");
+        txtPrice.setName("txtPrice");
+        txtQuantity.setName("txtQuantity");
+        comboBoxCategory.setName("comboBoxCategory");
+        textAreaDescription.setName("textAreaDescription");
+        
+        buttonSave.setName("buttonSave");
+        
     }
 
     public DataEntry(java.awt.Window parent, boolean modal, Product product, DAOInterface daoInt) {
