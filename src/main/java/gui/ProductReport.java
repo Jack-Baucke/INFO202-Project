@@ -34,6 +34,8 @@ public class ProductReport extends javax.swing.JDialog {
         myModel2.updateItems(dataAccess.getCategories());
         cmbCategory.setModel(myModel2);
         this.daoInt = daoInt;
+        
+        listProduct.setName("listProduct");
     }
 
     /**

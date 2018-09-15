@@ -5,7 +5,7 @@ package domain;
  */
 public class Customer {
 	
-	private int personID;
+	private String personID;
 	private String username;
 	private String firstName;
 	private String surname;
@@ -14,7 +14,7 @@ public class Customer {
 	private String shippingAddress;
 	private String creditCardDetails;
 
-	public Customer(int personID, String username, String firstName, String surname, String password, String emailAddress, String shippingAddress, String creditCardDetails) {
+	public Customer(String personID, String username, String firstName, String surname, String password, String emailAddress, String shippingAddress, String creditCardDetails) {
 		this.personID = personID;
 		this.username = username;
 		this.firstName = firstName;
@@ -24,8 +24,12 @@ public class Customer {
 		this.shippingAddress = shippingAddress;
 		this.creditCardDetails = creditCardDetails;
 	}
+        
+        public Customer() {
+            
+        }
 
-	public int getPersonID() {
+	public String getPersonID() {
 		return personID;
 	}
 
@@ -57,7 +61,7 @@ public class Customer {
 		return creditCardDetails;
 	}
 
-	public void setPersonID(int personID) {
+	public void setPersonID(String personID) {
 		this.personID = personID;
 	}
 

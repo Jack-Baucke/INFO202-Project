@@ -1,0 +1,7 @@
+<div id="menu" ng-controller="CustomerController as custCtrl">
+    <div id="welcome">{{custCtrl.welcome}}</div>
+    <a href="index.html">Home</a>   
+    <a href="products.html">Browse Products</a>
+    <a href="cart.html">View Cart</a>
+    <a href="signin.html" ng-if="!custCtrl.signedIn">Sign In</a>
+</div>

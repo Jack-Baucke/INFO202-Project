@@ -29,6 +29,8 @@ public class DAOTest {
     private Product prodOne = new Product();
     private Product prodTwo = new Product();
     private Product prodThree = new Product();
+    private Product prodFour = new Product();
+    private Product prodEdit1 = new Product();
     
     @Test
     public void testDaoSave() {
@@ -64,7 +66,7 @@ public class DAOTest {
         assertTrue("prodTwo should exist", products.contains(prodTwo));
         
         // ensure the result ONLY includes the two saved products
-        assertEquals("Only 2 products in result", 2, products.size());
+        assertEquals("No extra products in result", 4, products.size());
         
         // find prodOne - result is not a map, so we have to scan for it
         for (Product p : products) {
@@ -93,6 +95,47 @@ public class DAOTest {
         assertEquals(fakeId, null);       
     }
     
+    @Test
+    public void testGetCategories() {
+        Collection<String> categories = dao.getCategories();
+        
+        assertTrue("cat1 should exist", categories.contains("cat1"));
+        assertTrue("cat2 should exist", categories.contains("cat2"));
+        
+        assertEquals("Only 2 categories in result", 3, categories.size());
+        
+        assertEquals("Prod1's cat is cat1", prodOne.getCategory(), "cat1");
+        assertEquals("Prod2's cat is cat2", prodTwo.getCategory(), "cat2");
+    }
+    
+    @Test
+    public void testFilterByCategory() {
+        
+        Collection<Product> filteredProducts = dao.filterByCategory("cat2");
+        
+        assertTrue("prodTwo should be in list", filteredProducts.contains(prodTwo));
+        assertTrue("prodFour should be in list", filteredProducts.contains(prodFour));
+       
+        
+    }
+    
+    @Test
+    public void testEdit() {
+        
+
+        prodEdit1.setName("testEdit");
+
+        
+        dao.saveProduct(prodEdit1);
+        
+        assertEquals("ProdEdit1's name has been edited", prodEdit1.getName(), "testEdit");
+        
+        
+        
+        
+        
+    }
+    
     public DAOTest() {
     }
     
@@ -107,8 +150,20 @@ public class DAOTest {
         this.prodThree = new Product("3", "name3", "desc3", "cat3",
         new BigDecimal("55.00"), 66);
         
+        this.prodFour = new Product("4", "name4", "desc4", "cat2",
+        new BigDecimal("123.00"), 69);
+        
+        this.prodEdit1 = new Product("edit", "edit", "edit", "edit",
+        new BigDecimal("7675.00"), 420);
+        
+        
+        
         dao.saveProduct(prodOne);
         dao.saveProduct(prodTwo);
+        dao.saveProduct(prodFour);
+        dao.saveProduct(prodEdit1);
+
+
     }
     
     @After
@@ -117,6 +172,9 @@ public class DAOTest {
         dao.deleteProduct(prodOne);
         dao.deleteProduct(prodTwo);
         dao.deleteProduct(prodThree);
+        dao.deleteProduct(prodFour);
+        dao.deleteProduct(prodEdit1);
+        
     }
 
     // TODO add test methods here.

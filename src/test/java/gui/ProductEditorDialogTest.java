@@ -43,7 +43,7 @@ public class ProductEditorDialogTest {
         robot = BasicRobot.robotWithNewAwtHierarchy();
         
         // set speed
-        robot.settings().delayBetweenEvents(20);
+        robot.settings().delayBetweenEvents(50);
         
         // add some majors for testing with
         Collection<String> categories = new TreeSet<>();
@@ -107,5 +107,33 @@ public class ProductEditorDialogTest {
         assertEquals("Ensure the category was saved", "testCategory1", savedProduct.getCategory());
         assertEquals("Ensure the price was saved", new BigDecimal("1234"), savedProduct.getListPrice());
         assertEquals("Ensure the quantity was saved", new Integer(4321), savedProduct.getQuantity());
+    }
+    
+    @Test
+    public void testEdit() {
+        
+        Product product = new Product("test1", "test2", "test3", "testCategory2", new BigDecimal("123.00"), 321);
+               
+        DataEntry dialog = new DataEntry(null, true, product, dao);
+        
+        fixture = new DialogFixture(robot, dialog);
+        fixture.show().requireVisible();
+        fixture.textBox("txtName").enterText("edit");
+        fixture.textBox("textAreaDescription").enterText("edit");
+        fixture.comboBox("comboBoxCategory").selectItem("testCategory1");
+        fixture.textBox("txtPrice").enterText("1");
+        fixture.textBox("txtQuantity").enterText("1");
+        fixture.button("buttonSave").click();
+        
+        ArgumentCaptor<Product> argument = ArgumentCaptor.forClass(Product.class);
+        verify(dao).saveProduct(argument.capture());
+        Product savedProduct = argument.getValue();
+        
+        assertEquals("Ensure name saved", "edittest2", savedProduct.getName());
+        assertEquals("Ensure description saved", "edittest3", savedProduct.getDescription());
+        assertEquals("Ensure category saved", "testCategory1", savedProduct.getCategory());
+        assertEquals("Ensure price saved", new BigDecimal("1123"), savedProduct.getListPrice());
+        assertEquals("Ensure quantity saved", new Integer(1321), savedProduct.getQuantity());
+        
     }
 }
