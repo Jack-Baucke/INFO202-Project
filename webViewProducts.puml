@@ -1,0 +1,78 @@
+@startuml
+ 
+' style tweaks to make the diagram a little more readable
+skinparam {
+	Style strictuml
+	RoundCorner 8
+ 
+	Sequence {
+		' make activations yellow too
+		LifeLineBackgroundColor #FDFDCD
+ 
+		' make stereotypes less ugly
+		Stereotype {
+			Font {
+				Size 11
+				Style plain
+			}
+		}
+	}
+ 
+	DatabaseBorderColor #A80036
+ 
+}
+ 
+title View Products (using products.html)
+ 
+actor "User" as user
+participant "products.html" as web <<Web Page>>
+participant "ProductController" as prodCtrl <<Controller>>
+participant "ProductModule" as prodMod <<Module>>
+participant "ProductsDAO" as dao <<DAO>>
+database "Database" as db
+
+web++
+create web
+user -> web : Loads up products.html page
+
+web -> prodCtrl++ : get list of categories from database
+
+prodCtrl -> prodMod++ : query for list of categories
+
+prodMod -> dao++ : getCategories()
+dao -> db++ : "select distinct category from product"
+return categories
+return categories
+return categories
+return categories
+
+web -> web : for each category in\ncategories display category
+
+note left : category buttons now\nvisible to user
+
+db--
+dao--
+prodMod--
+prodCtrl--
+
+web -> prodCtrl++ : get list of products from database
+prodCtrl -> prodMod++ : query for list of products
+
+prodMod -> dao++ : getProducts()
+dao -> db++ : "select * from product"
+
+return products
+return products
+return products
+return products
+
+web -> web : for each product in\nproducts display product
+
+note left : products now\nvisible to user
+
+db--
+dao--
+prodMod--
+prodCtrl--
+ 
+@enduml

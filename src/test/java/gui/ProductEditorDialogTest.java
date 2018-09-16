@@ -7,6 +7,7 @@ package gui;
 
 import dao.DAO;
 import domain.Product;
+import gui.helpers.SimpleListModel;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.TreeSet;
@@ -118,22 +119,26 @@ public class ProductEditorDialogTest {
         
         fixture = new DialogFixture(robot, dialog);
         fixture.show().requireVisible();
-        fixture.textBox("txtName").enterText("edit");
-        fixture.textBox("textAreaDescription").enterText("edit");
+        fixture.textBox("txtName").requireText("test2");
+        fixture.textBox("textAreaDescription").requireText("test3");
+        fixture.comboBox("comboBoxCategory").requireSelection("testCategory2");
+        fixture.textBox("txtPrice").requireText("123.00");
+        fixture.textBox("txtQuantity").requireText("321");
+        
+        fixture.textBox("txtName").selectAll().deleteText().enterText("edit");
         fixture.comboBox("comboBoxCategory").selectItem("testCategory1");
-        fixture.textBox("txtPrice").enterText("1");
-        fixture.textBox("txtQuantity").enterText("1");
+        
         fixture.button("buttonSave").click();
         
         ArgumentCaptor<Product> argument = ArgumentCaptor.forClass(Product.class);
         verify(dao).saveProduct(argument.capture());
         Product savedProduct = argument.getValue();
         
-        assertEquals("Ensure name saved", "edittest2", savedProduct.getName());
-        assertEquals("Ensure description saved", "edittest3", savedProduct.getDescription());
-        assertEquals("Ensure category saved", "testCategory1", savedProduct.getCategory());
-        assertEquals("Ensure price saved", new BigDecimal("1123"), savedProduct.getListPrice());
-        assertEquals("Ensure quantity saved", new Integer(1321), savedProduct.getQuantity());
+        assertEquals("Ensure name saved", "edit", savedProduct.getName());
+        assertEquals("Ensure category changed", "testCategory1", savedProduct.getCategory());
+
         
     }
+    
+    
 }

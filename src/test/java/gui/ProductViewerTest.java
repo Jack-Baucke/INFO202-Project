@@ -33,6 +33,9 @@ public class ProductViewerTest {
     private DialogFixture fixture;
     private Robot robot;
     
+    private Product prod1;
+    private Product prod2;
+    
     public ProductViewerTest() {
         
     }
@@ -44,17 +47,12 @@ public class ProductViewerTest {
         
         // set speed
         robot.settings().delayBetweenEvents(50);
-        
-        // add some majors for testing with
-        Collection<String> categories = new TreeSet<>();
-        categories.add("testCategory1");
-        categories.add("testCategory2");
-        
+                
         Collection<Product> products = new TreeSet<>();
-        Product prod1 = new Product("id1", "name1", "desc1", "testCategory1",
+        this.prod1 = new Product("id1", "name1", "desc1", "testCategory1",
         new BigDecimal("123.00"), 321);
         
-        Product prod2 = new Product("id2", "name2", "desc2", "testCategory2",
+        this.prod2 = new Product("id2", "name2", "desc2", "testCategory2",
         new BigDecimal("321.00"), 123);
         
         products.add(prod1);
@@ -64,7 +62,7 @@ public class ProductViewerTest {
         dao = mock(DAO.class);
         
         // stub the getCategories method to return the test categories
-        when(dao.getCategories()).thenReturn(categories);
+//        when(dao.getCategories()).thenReturn(categories);
         when(dao.getProducts()).thenReturn(products);
     }
     
@@ -82,6 +80,8 @@ public class ProductViewerTest {
         fixture.show().requireVisible();
         
         SimpleListModel model = (SimpleListModel) fixture.list("listProducts").target().getModel();
+        model.updateItems(dao.getProducts());
+//        fixture.list("listProducts").setModel(model);
         
         assertTrue("list contains prod1", model.contains(prod1));
         assertTrue("list contains prod2", model.contains(prod2));
