@@ -10,7 +10,7 @@ import domain.Product;
 import gui.helpers.SimpleListModel;
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.TreeSet;
+import java.util.HashSet;
 import org.assertj.swing.core.BasicRobot;
 import org.assertj.swing.core.Robot;
 import org.assertj.swing.fixture.DialogFixture;
@@ -18,7 +18,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.mockito.ArgumentCaptor;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -48,7 +47,7 @@ public class ProductViewerTest {
         // set speed
         robot.settings().delayBetweenEvents(50);
                 
-        Collection<Product> products = new TreeSet<>();
+        Collection<Product> products = new HashSet<>();
         this.prod1 = new Product("id1", "name1", "desc1", "testCategory1",
         new BigDecimal("123.00"), 321);
         
@@ -78,9 +77,11 @@ public class ProductViewerTest {
         
         fixture = new DialogFixture(robot, dialog);
         fixture.show().requireVisible();
+       
+        verify(dao).getProducts();
         
         SimpleListModel model = (SimpleListModel) fixture.list("listProducts").target().getModel();
-        model.updateItems(dao.getProducts());
+       
 //        fixture.list("listProducts").setModel(model);
         
         assertTrue("list contains prod1", model.contains(prod1));

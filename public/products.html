@@ -6,6 +6,8 @@ and open the template in the editor.
 -->
 <html ng-app="ShoppingApp">
     <head>
+        
+        <link rel="stylesheet" href="../css/style.css">
         <script src="js/angular.min.js"></script>
         <script src="js/angular-resource.min.js"></script>
         <script src="js/ngStorage.min.js"></script>
@@ -23,11 +25,12 @@ and open the template in the editor.
             Products
         </h1>
 
-        <button ng-click="prodCtrl.getAll()">All</button>
+        <button id="buy" ng-click="prodCtrl.getAll()">All</button>
 
-        <button ng-repeat="cat in prodCtrl.categories" ng-click="prodCtrl.selectCategory(cat)">{{cat}}</button>
+        <button id="buy" ng-repeat="cat in prodCtrl.categories" ng-click="prodCtrl.selectCategory(cat)">{{cat}}</button>
+        
 
-        <table>
+        <table ng-controller="CartController as cartCtrl">
             <thead>
                 <tr>
                     <th>Names</th>
@@ -36,13 +39,15 @@ and open the template in the editor.
                     <th>Available</th>
                 </tr>
             </thead>
+
             <tbody>
                 <tr ng-repeat="product in prodCtrl.products">
                     <td>{{product.name}}</td>
                     <td>{{product.description}}</td>
                     <td>{{product.listPrice}}</td>
                     <td>{{product.quantity}}</td>
-                    <td>Buy</td>
+                    <td ng-click="cartCtrl.buy(product)"><button id="buy">Buy</button></td>
+                    
                 </tr>
             </tbody>
         </table>

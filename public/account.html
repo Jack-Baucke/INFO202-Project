@@ -7,7 +7,7 @@ and open the template in the editor.
 
 <html ng-app="ShoppingApp">
     <head>
-        
+        <link rel="stylesheet" href="../css/style.css">       
         <script src="js/angular.min.js"></script>
         <script src="js/angular-resource.min.js"></script>
         <script src="js/ngStorage.min.js"></script>
@@ -40,10 +40,9 @@ and open the template in the editor.
                 <input type="number" ng-model="customer.creditCardDetails" required><br>
                 <label>Password: </label>
                 <input type="password" ng-model="customer.password" required><br>
-                <button type="submit">Create Account</button>
+                <button id="buy" type="submit">Create Account</button>
 
             </fieldset>
         </form>
-        <div></div>
     </body>
 </html>

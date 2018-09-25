@@ -4,47 +4,60 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html ng-app="ShoppingApp">
     <head>
+        <link rel="stylesheet" href="../css/style.css">
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-resource.min.js"></script>
+        <script src="js/ngStorage.min.js"></script>
+        <script src="js/shopping.js"></script>
+        
         <title>Quantity to Purchase Screen</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body ng-controller="CustomerController as custCtrl">
+    <body ng-controller="CartController as cartCtrl">
         <div ng-include="'menu.html'"></div>
 
         <h1>
-            How Many do you want to buy?
+            How many do you want to buy?
         </h1>
 
         <table>
 
             <tr>          
                 <td>ID:</td>
-                <td>testID</td>
+                <td></td>
+                <td>{{cartCtrl.selectedProduct.productID}}</td>
             </tr>
 
             <tr>          
                 <td>Name:</td>
-                <td>testName</td>
+                <td></td>
+                <td>{{cartCtrl.selectedProduct.name}}</td>
             </tr>
 
             <tr>          
                 <td>Description:</td>
-                <td>testDesc</td>
+                <td></td>
+                <td>{{cartCtrl.selectedProduct.description}}</td>
             </tr>
 
             <tr>          
                 <td>Price:</td>
-                <td>testPrice</td>
+                <td></td>
+                <td>{{cartCtrl.selectedProduct.listPrice}}</td>
             </tr>
 
             <tr>          
                 <td>Quantity available:</td>
-                <td>testQuan</td>
+                <td></td>
+                <td>{{cartCtrl.selectedProduct.quantity}}</td>
             </tr>        
 
         </table>
+        
+        <form>
 
         <fieldset>
 
@@ -53,12 +66,15 @@ and open the template in the editor.
             </legend>
 
             <label> How many?</label>
-            <input type="text">
-            <button type="submit">
+            <input ng-model="quantity" type="text">
+            
+            <button type="submit" ng-click="cartCtrl.addToCart(quantity)">
                 Add to Cart
             </button>
 
         </fieldset>
+            
+        </form>
 
     </body>
 </html>

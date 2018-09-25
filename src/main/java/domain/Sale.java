@@ -16,7 +16,7 @@ public class Sale {
     private String status;
 
     private Customer customer;
-    private  ArrayList<SaleItem> saleItemList = new ArrayList<>();
+    private  ArrayList<SaleItem> items = new ArrayList<>();
 
     public Sale(int saleID, Date date, String status) {
         this.saleID = saleID;
@@ -62,13 +62,27 @@ public class Sale {
     }
 
     public void addItem(SaleItem saleItem) {
-        saleItemList.add(saleItem);
+        items.add(saleItem);
+    }
+    
+    public ArrayList<SaleItem> getItems() {
+        return items;
+    }
+    
+    public String printItems() {
+        String result = "";
+        for (SaleItem item : items) {
+            result += item.getQuantityPurchased() + " x " + item.getProduct().getName() + "\n";
+        }
+        return result;
     }
 
     public BigDecimal getTotal() {
         BigDecimal total = new BigDecimal(0);
-        for (SaleItem item : saleItemList) {
-            total.add(item.getSalePrice());
+        for (SaleItem item : items) {
+            total = total.add(item.getSalePrice());
+            System.out.println("getSalePrice:" + item.getSalePrice());
+            System.out.println("total=" + total);
         }
         return total;
     }

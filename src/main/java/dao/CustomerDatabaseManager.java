@@ -73,7 +73,7 @@ public class CustomerDatabaseManager implements CustomerDAOInterface{
                 String emailAddress = rs.getString("email");
                 String shippingAddress = rs.getString("shipping_address");
                 
-                return new Customer(personID, username, firstName, surname, password, creditCardDetails, emailAddress, shippingAddress);
+                return new Customer(personID, username, firstName, surname, password, emailAddress, shippingAddress, creditCardDetails);
             
             } else {
                 return null;

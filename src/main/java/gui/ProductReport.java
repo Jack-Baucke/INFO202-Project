@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class ProductReport extends javax.swing.JDialog {
 
-    private DatabaseManager dataAccess = new DatabaseManager();
+    private final DAOInterface dataAccess;
     private SimpleListModel myModel1 = new SimpleListModel();
     private SimpleListModel myModel2 = new SimpleListModel();
     private DAOInterface daoInt;
@@ -28,6 +28,7 @@ public class ProductReport extends javax.swing.JDialog {
      */
     public ProductReport(java.awt.Frame parent, boolean modal, DAOInterface daoInt) {
         super(parent, modal);
+        this.dataAccess = daoInt;
         initComponents();
         myModel1.updateItems(dataAccess.getProducts());
         listProduct.setModel(myModel1);
@@ -35,7 +36,7 @@ public class ProductReport extends javax.swing.JDialog {
         cmbCategory.setModel(myModel2);
         this.daoInt = daoInt;
         
-        listProduct.setName("listProduct");
+        listProduct.setName("listProducts");
     }
 
     /**

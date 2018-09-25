@@ -6,26 +6,21 @@ and open the template in the editor.
 -->
 <html ng-app="ShoppingApp">
     <head>
+        
         <link rel="stylesheet" href="../css/style.css">
-
         <script src="js/angular.min.js"></script>
         <script src="js/angular-resource.min.js"></script>
         <script src="js/ngStorage.min.js"></script>
         <script src="js/shopping.js"></script>
 
-
-        <title>Home page</title>
+        <title>Page thanking user for their order</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    
-    <body ng-controller="ProductController as prodCtrl">
+    <body>
+
         <div ng-include="'menu.html'"></div>
-        <h1>Welcome to Products.com</h1>
-        <p>Click one of the links at the top of the page to get started!!</p>
-
-        <img src="../images/image.jpg" alt="Products">
-        
-
+        <h1>Thanks for your order!</h1>
+        <p>We have emailed the details of your order to your registered email address</p>
     </body>
 </html>

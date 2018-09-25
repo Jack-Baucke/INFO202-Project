@@ -1,0 +1,91 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24/09/2018, 9:09:36 PM
+    Author     : bauja773
+*/
+
+a {
+    font-size: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+body {
+  background-color: linen;
+  text-align: center;
+  font-family: arial;
+}
+
+h1 {
+  font-size: 60px;
+  font-family: arial;
+  color: maroon;
+  background-color: #ffcccc;
+
+}
+
+p {
+  font-size: 20px;
+}
+
+div {
+   background-color: #cccccc;
+   width: 70%;
+   margin: auto;
+   border-radius: 10px;  
+   padding-bottom: 10px;
+   font-family: arial;
+   font-size: 16px;
+}
+
+button {
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+table {
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+th {
+    color: maroon;
+    padding-right: 25px;
+    text-align: left;
+}
+
+#cartbody {
+    margin-bottom: 15px;
+}
+
+td {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#buy {
+    background-color: #cccccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    padding: 5px;    
+}
+
+#buy:hover {
+    background-color: lightblue;
+}
+
+fieldset {
+    width: 50%;
+    margin: auto;
+}
+
+input {
+    margin-top: 5px;
+    margin-bottom: 5px;    
+}
