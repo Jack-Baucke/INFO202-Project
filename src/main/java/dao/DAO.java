@@ -11,9 +11,12 @@ import domain.Product;
 import java.math.BigDecimal;
 //import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  *
@@ -37,6 +40,7 @@ public class DAO implements DAOInterface {
 
     @Override
     public Collection<Product> getProducts() {
+        SortedSet<String> keys = new TreeSet<String>(productIDMap.keySet());
         return productIDMap.values();
     }
 

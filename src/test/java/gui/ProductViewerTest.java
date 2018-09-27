@@ -18,6 +18,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.mockito.ArgumentCaptor;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -45,7 +46,7 @@ public class ProductViewerTest {
         robot = BasicRobot.robotWithNewAwtHierarchy();
         
         // set speed
-        robot.settings().delayBetweenEvents(50);
+        robot.settings().delayBetweenEvents(300);
                 
         Collection<Product> products = new HashSet<>();
         this.prod1 = new Product("id1", "name1", "desc1", "testCategory1",
@@ -70,6 +71,7 @@ public class ProductViewerTest {
         fixture.cleanUp();
     }
     
+    
     @Test
     public void testView() {
         
@@ -81,12 +83,80 @@ public class ProductViewerTest {
         verify(dao).getProducts();
         
         SimpleListModel model = (SimpleListModel) fixture.list("listProducts").target().getModel();
-       
-//        fixture.list("listProducts").setModel(model);
         
         assertTrue("list contains prod1", model.contains(prod1));
         assertTrue("list contains prod2", model.contains(prod2));
         assertEquals("list contains correct no. products", 2, model.getSize());
+        
+    }
+    
+    @Test
+    public void testEdit() {
+        ProductReport dialog = new ProductReport(null, true, dao);
+        fixture = new DialogFixture(robot, dialog);
+        fixture.show().requireVisible();
+        
+        fixture.list("listProducts").selectItem(prod1.toString());
+        fixture.button("buttonEdit").click();
+        
+        DialogFixture editDialog = fixture.dialog("productEditor");
+        
+        editDialog.textBox("txtID").requireText("id1");
+        editDialog.textBox("txtName").requireText("name1");
+        editDialog.textBox("textAreaDescription").requireText("desc1");
+        editDialog.comboBox("comboBoxCategory").requireSelection("testCategory1");
+        editDialog.textBox("txtPrice").requireText("123.00");
+        editDialog.textBox("txtQuantity").requireText("321");
+    }
+    
+    @Test
+    public void testSearch() {
+        ProductReport dialog = new ProductReport(null, true, dao);
+        fixture = new DialogFixture(robot, dialog);
+        fixture.show().requireVisible();
+        
+        SimpleListModel model = (SimpleListModel) fixture.list("listProducts").target().getModel();
+        
+        fixture.textBox("txtSearch").enterText("id2");
+        fixture.button("buttonSearch").click();
+        
+        ArgumentCaptor<Product> argument = ArgumentCaptor.forClass(Product.class);
+        
+        verify(dao).search("id2"); 
+        
+        Product retrievedProduct = argument.getValue();        
+        
+        assertTrue("Search resulted in prod2", model.contains(retrievedProduct));
+        assertEquals("Search only result in one product", 1, model.getSize());
+    }
+    
+    @Test
+    public void testFilter() {
+        ProductReport dialog = new ProductReport(null, true, dao);
+        fixture = new DialogFixture(robot, dialog);
+        fixture.show().requireVisible();
+        
+        fixture.comboBox("cmbCategory").selectItem("testCategory1");
+        
+        SimpleListModel model = (SimpleListModel) fixture.list("listProducts").target().getModel();
+        
+        assertTrue("Search results in prod1", model.contains(prod1));
+        assertEquals("Filter only results in one product", 1, model.getSize());
+    }
+    
+    @Test
+    public void testDelete() {
+        ProductReport dialog = new ProductReport(null, true, dao);
+        fixture = new DialogFixture(robot, dialog);
+        fixture.show().requireVisible();
+        
+        fixture.list("listProducts").selectItem(1);
+        fixture.button("buttonDelete").click();
+        
+        SimpleListModel model = (SimpleListModel) fixture.list("listProducts").target().getModel();
+        
+        assertFalse("Prod1 was deleted", model.contains(prod1));
+        assertEquals("List only contains 1 item now", 1, model.getSize());
         
     }
     

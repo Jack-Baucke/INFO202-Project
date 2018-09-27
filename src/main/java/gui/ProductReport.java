@@ -10,6 +10,7 @@ import dao.DAOInterface;
 import dao.DatabaseManager;
 import gui.helpers.SimpleListModel;
 import domain.Product;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,6 +38,11 @@ public class ProductReport extends javax.swing.JDialog {
         this.daoInt = daoInt;
         
         listProduct.setName("listProducts");
+        buttonEdit.setName("buttonEdit");
+        txtID.setName("txtSearch");
+        buttonSearch.setName("buttonSearch");
+        cmbCategory.setName("cmbCategory");
+        buttonDelete.setName("buttonDelete");
     }
 
     /**

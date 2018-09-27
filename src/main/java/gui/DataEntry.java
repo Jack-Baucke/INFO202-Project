@@ -50,6 +50,8 @@ public class DataEntry extends javax.swing.JDialog {
         
         buttonSave.setName("buttonSave");
         
+        this.setName("productEditor");
+        
     }
 
     public DataEntry(java.awt.Window parent, boolean modal, Product product, DAOInterface daoInt) {

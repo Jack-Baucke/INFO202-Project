@@ -66,7 +66,7 @@ and open the template in the editor.
             </legend>
 
             <label> How many?</label>
-            <input ng-model="quantity" type="text">
+            <input type="number" name="test_name" min="1" oninput="validity.valid||(value='');" ng-model="quantity">
             
             <button type="submit" ng-click="cartCtrl.addToCart(quantity)">
                 Add to Cart
