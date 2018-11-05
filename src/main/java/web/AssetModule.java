@@ -15,6 +15,10 @@ import org.jooby.Results;
 public class AssetModule extends Jooby{
     
     public AssetModule() {
+        
+        assets("/products.html");
+        assets("/cart.html");
+        
         assets("/*.html");
         assets("/css/*.css");
         assets("/js/*.js");
@@ -24,7 +28,11 @@ public class AssetModule extends Jooby{
         // make index.html the default page
         assets("/", "index.html");
         
+        assets("/css/style.css");
+        
         // prevent 404 errors due to browsers requesting favicons
         get("/favicon.ico", () -> Results.noContent());
+        
+        assets("js/shopping.js");
     }
 }

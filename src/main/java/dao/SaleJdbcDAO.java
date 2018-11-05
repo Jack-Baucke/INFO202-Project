@@ -106,7 +106,7 @@ public class SaleJdbcDAO implements SaleDAO {
 					// ****
                                         
                                         insertSaleItemStmt.setInt(1, item.getQuantityPurchased());
-                                        insertSaleItemStmt.setBigDecimal(2, item.getSalePrice());
+                                        insertSaleItemStmt.setBigDecimal(2, product.getListPrice());
                                         insertSaleItemStmt.setString(3, product.getProductID());
                                         insertSaleItemStmt.setInt(4, saleId);
                                         
